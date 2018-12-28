@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="John Doe">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="John Doe">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>数据结构和算法-绪论 · fi3ework&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin="">
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin="">
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">Home</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">数据结构和算法-绪论</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">Home</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            数据结构和算法-绪论
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">4k</span>阅读时长: <span class="post-count reading-time">14 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/12/28</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><h2 id="数据结构和算法绪论"><a href="#数据结构和算法绪论" class="headerlink" title="数据结构和算法绪论"></a>数据结构和算法绪论</h2><h4 id="什么是数据结构"><a href="#什么是数据结构" class="headerlink" title="什么是数据结构"></a>什么是数据结构</h4><blockquote>
+<p>数据结构是一门研究非数值计算的程序设计问题中的操作对象，以及它们之间的关系和操作等相关问题的学科。  </p>
+<ul>
+<li>程序设计=数据结构+算法</li>
+<li>再简单的来说数据结构就是关系，就是数据元素相互之间存在的一种或多种特定关系的集合。</li>
+</ul>
+</blockquote>
+<h4 id="逻辑结构和物理结构"><a href="#逻辑结构和物理结构" class="headerlink" title="逻辑结构和物理结构"></a>逻辑结构和物理结构</h4><blockquote>
+<ul>
+<li>传统上，我们把数据结构分为逻辑结构和物理结构。</li>
+<li>逻辑结构：是指数据对象中数据元素之间的相互关系。</li>
+<li>物理结构：是指数据的逻辑结构在计算机中的存储形式。</li>
+</ul>
+</blockquote>
+<h4 id="四大逻辑结构"><a href="#四大逻辑结构" class="headerlink" title="四大逻辑结构"></a>四大逻辑结构</h4><blockquote>
+<ul>
+<li>集合结构：集合结构中的数据元素除了同属于一个集合外，它们之间没有其他任何关系。</li>
+<li>线性结构：线性结构中的数据元素之间是一对一的关系。</li>
+<li>树形结构：树形结构中的数据元素之间存在一种一对多的层次关系（像3P，4P等）</li>
+<li>图形结构：图形结构的数据元素是多对多的关系。</li>
+</ul>
+</blockquote>
+<h4 id="物理结构"><a href="#物理结构" class="headerlink" title="物理结构"></a>物理结构</h4><blockquote>
+<ul>
+<li>根据物理结构的定义，我们实际上研究的就是如何把数据元素存储到计算机的存储器中。</li>
+<li>存储器主要是针对内存而言的，像硬盘、软盘、光盘等外部存储器的数据组织通常用文件结构来描述。</li>
+<li>数据元素的存储结构形式有两种：顺序存储和链式存储。</li>
+<li>顺序存储结构：是把数据元素存放在地址连续的存储单元里，其数据间的逻辑关系和物理关系是一致的。（例如：数组结构）</li>
+<li>链式存储结构：是把数据元素存放在任意的存储单元里，这组存储单元可以是连续的，也可以是不连续的。<br>链式存储结构的数据元素存储关系并不能反映其逻辑关系，因此需要用一个指针存放数据元素的地址，这样子通过地址就可以找到相关数据元素的位置。</li>
+</ul>
+</blockquote>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h4 id="什么是算法"><a href="#什么是算法" class="headerlink" title="什么是算法"></a>什么是算法</h4><blockquote>
+<p>算法是解决特定问题求解步骤的描述，在计算机中表现为指令的有限序列，并且每条指令表示一个或多个操作。</p>
+</blockquote>
+<h4 id="算法的特征"><a href="#算法的特征" class="headerlink" title="算法的特征"></a>算法的特征</h4><blockquote>
+<p>算法具有五个基本特征：输入、输出、有穷性、确定性和可行性。</p>
+<ul>
+<li>输入<br>算法具有零个或多个输入。<br>尽管对于绝大多数算法来说，输入参数都是必要的，但是有些时候，也可以不输入。</li>
+<li>输出<br>算法至少有一个或多个输出。<br>算法是一定要输出的，输出的形式可以是打印形式输出，也可以是返回一个值或多个值等。</li>
+<li>有穷性<br>指算法在执行有限的步骤之后，自动结束而不会出现无限循环，并且每一个步骤在可接受的时间内完成。</li>
+<li>确定性<br>算法的每一个步骤都具有确定的含义，不会出现二义性。<br>算法在一定条件下，只有一条执行路径，相同的输入只能有唯一的输出结果。<br>算法的每个步骤都应该被精确定义而无歧义。</li>
+<li>可行性<br>算法的每一步都必须是可行的，也就是说，每一步都能够通过执行有限次数完成。</li>
+</ul>
+</blockquote>
+<h4 id="算法设计的要求"><a href="#算法设计的要求" class="headerlink" title="算法设计的要求"></a>算法设计的要求</h4><blockquote>
+<p>算法不是唯一的，也就是说同一个问题，可以有多种解决问题的算法。</p>
+<ul>
+<li>正确性<br>算法的正确性是指算法至少应该具有输入、输出和加工处理无歧义性、能够正确反映问题的需求、能够得到问题的正确答案。<br>大致分为以下四个层次：<br>算法程序没有语法错误。<br>算法程序对于合法输入能够产生满足要求的输出。<br>算法程序对于非法输入能够产生满足规格的说明。<br>算法程序对于故意刁难的测试输入都有满足要求的输出结果。</li>
+<li>可读性<br>算法设计的另一个目的是为了便于阅读、理解和交流。<br>写代码的目的，一方面是为了计算机执行，但还有一个重要的目的是为了便于他人阅读和自己日后阅读修改。</li>
+<li>健壮性<br>当输入数据不合法时，算法也能做出相关处理，而不是产生异常、崩溃或莫名奇妙的结果。  </li>
+<li>时间效率高和存储量低<br>好算法，应该具备时间效率高和存储量低的特点。所以在设计算法的时候我们应该尽量思考这两方面的问题！</li>
+</ul>
+</blockquote>
+<h2 id="时间复杂度和空间复杂度"><a href="#时间复杂度和空间复杂度" class="headerlink" title="时间复杂度和空间复杂度"></a>时间复杂度和空间复杂度</h2><h4 id="算法效率的度量方法"><a href="#算法效率的度量方法" class="headerlink" title="算法效率的度量方法"></a>算法效率的度量方法</h4><blockquote>
+<ul>
+<li>事后统计方法<br>这种方法主要是通过设计好的测试程序和数据，利用计算机计时器对不同算法编制的程序的运行时间进行比较，从而确定算法效率的高低。<br>这种方法显然是有很大缺陷的：<br>必须依据算法事先编制好测试的程序，通常需要花费大量的时间和精力。<br>不同的测试环境也有很大的差别。  </li>
+<li>事前分析估算方法<br>在计算机程序编写前，依据统计方法对算法进行估算。  </li>
+<li>高级语言编写的程序在计算机上运行时所消耗的时间取决于下列因素<br>1.算法采用的策略，方案<br>2.编译产生的代码质量<br>3.问题的输入规模<br>4.机器执行指令的速度  </li>
+<li>由此可见，抛开这些与计算机硬件、软件有关的因素，一个程序的运行时间依赖于算法的好坏和问题的输入规模。（所谓的问题输入规模是指输入量的多少）</li>
+<li>如果非常较真的研究总共精确执行次数，那是非常累的。我们研究算法的复杂度，侧重的是研究算法随着输入规模扩大增长量的一个抽象，而不是精确地定位需要执行多少次，因为如果这样的话，我们就又得考虑回编译器优化等问题，然后，然后就永远也没有然后了！  </li>
+<li>我们不关心编写程序所用的语言是什么，也不关心这些程序将跑在什么样的计算机上，我们只关心它所实现的算法。 </li>
+<li>这样，不计那些循环索引的递增和循环终止条件、变量声明、打印结果等操作。最终，在分析程序的运行时间，最重要的是把程序看成是独立于程序设计语言的算法或一系列操作。</li>
+<li>我们在分析一个算法的运行时间时，重要的是把基本操作的数量和输入模式关联起来。</li>
+</ul>
+</blockquote>
+<h4 id="函数渐进增长"><a href="#函数渐进增长" class="headerlink" title="函数渐进增长"></a>函数渐进增长</h4><blockquote>
+<ul>
+<li>函数的渐进增长：<br>给定2个函数f(n)和g(n)，如果存在一个整数N，使得对于所有的n&gt;N，f(n)总是比g(n)大，那么，我们说f(n)的增长渐进快于g(n)。  </li>
+<li>最高次项的指数大的，函数随着n的增长，结果也会变得增长特别快。</li>
+<li>算法G是2n^2 ，算法H是3n+1，算法I是2n^2+3n+1<br>当n的值变得非常大的时候，3n+1已经没法和2n^2的结果相比较，最终几乎可以忽略不计。而算法G跟算法I基本重合了。<br>于是我们可以得到这样的一个结论，判断一个算法的效率时，函数中的常数和其他次要项常常可以忽略，而更应该关注主项（最高项）的阶数。<br>注意，判断一个算法好不好，我们只通过少量的数据是不能做出准确判断的的，很容易以偏概全。</li>
+</ul>
+</blockquote>
+<h4 id="算法时间复杂度的定义"><a href="#算法时间复杂度的定义" class="headerlink" title="算法时间复杂度的定义"></a>算法时间复杂度的定义</h4><blockquote>
+<p>在进行算法分析时，语句总的执行次数T(n)是关于问题规模n的函数，进而分析T(n)随n的变化情况并确定T(n)的数量级。算法的时间复杂度，也就是算法的时间量度，记作：T(n)=O(f(n))。它表示随问题规模n的增大，算法执行时间的增长率和f(n)的增长率相同，称作算法的渐进时间复杂度，简称为时间复杂度。其中f(n)是问题规模n的某个函数。（执行次数==时间）<br>这样用大写O()来体现算法时间复杂度的记法，我们称之为大O记法。<br>一般情况下，随着输入规模n的增大，T(n)增长最慢的算法为最优算法。<br>显然，由此算法时间复杂度的定义可知，我们的三个求和算法的时间复杂度分别为O(1)，O(n)，O(n^2)。  </p>
+</blockquote>
+<h4 id="推到大O阶方法"><a href="#推到大O阶方法" class="headerlink" title="推到大O阶方法"></a>推到大O阶方法</h4><blockquote>
+<ul>
+<li>用常数1取代运行时间中的所有加法常数。</li>
+<li>在修改后的运行次数函数中，只保留最高项阶。</li>
+<li>如果最高项存在且不是1，则去除与这个最高项相乘的常数。</li>
+<li>得到的最后结果就是大O阶。</li>
+</ul>
+</blockquote>
+<h5 id="常数阶"><a href="#常数阶" class="headerlink" title="常数阶"></a>常数阶</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int sum = 0, n = 100;</span><br><span class="line">System.out.println(&quot;Hello&quot;);</span><br><span class="line">System.out.println(&quot;Hello&quot;);</span><br><span class="line">System.out.println(&quot;Hello&quot;);</span><br><span class="line">System.out.println(&quot;Hello&quot;);</span><br><span class="line">System.out.println(&quot;Hello&quot;);</span><br><span class="line">System.out.println(&quot;Hello&quot;);</span><br><span class="line">sum = (1+n)*n/2</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>不能从汇编的角度分析，应该以高级语言的角度分析。<br>这段代码的大O是多少？<br>O(8)？<br>总认为有多少条语句就有多少。<br>分析下，按照我们的概念“T(n)是关于问题规模n的函数”来说，这里，跟问题规模没有关系，所以我们记作O(1)就可以。<br>另外，如果按照攻略来，那就更简单了，攻略第一条就说明了所有加法常数给他个O(1)即可。 </p>
+</blockquote>
+<h5 id="线性阶"><a href="#线性阶" class="headerlink" title="线性阶"></a>线性阶</h5><blockquote>
+<p>一般含有非嵌套循环涉及线性阶，线性阶就是随着问题规模n的扩大，对应计算次数呈直线增长。  </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int i, n = 100, sum = 0;</span><br><span class="line">for(i=0; i&lt;n; i++) &#123;</span><br><span class="line">	sum = sum + i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面这段代码，它的循环的时间复杂度为O(n)，因为循环体中的代码需要执行n次。</p>
+</blockquote>
+<h5 id="平方阶"><a href="#平方阶" class="headerlink" title="平方阶"></a>平方阶</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int i, j, n = 100;</span><br><span class="line">for(i=0; i&lt;n; i++) &#123;</span><br><span class="line">	int i, n = 100, sum = 0;</span><br><span class="line">    for(j=0; j&lt;n; j++) &#123;</span><br><span class="line">    	System.out.println(&quot;Hello&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>n等于100，也就是说外层循环每执行一次，内层循环就执行100次，那总共程序想要从这两个循环出来，需要执行100*100次，也就是n的平方。所以这段代码的时间复杂度为O(n^2)。<br>那如果有三个这样的嵌套循环，那就是n^3。所以我们很容易总结得出，循环的时间复杂度等于循环体的复杂度乘以该循环运行的次数。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int i, j, n = 100;</span><br><span class="line">for(i=0; i&lt;n; i++) &#123;</span><br><span class="line">	int i, n = 100, sum = 0;</span><br><span class="line">    for(j=i; j&lt;n; j++) &#123;</span><br><span class="line">    	System.out.println(&quot;Hello&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析下，由于当i等于0时，内循环执行了n次，当i=1时，内循环则执行n-1次……当i=n-1时，内循环就执行了1次，所以总共的执行次数应该是：<br>n+(n-1)+(n-2)+…+1 = n(n+1)/2 = n^2/2+n/2<br>用我们的推导大O的攻略，第一条忽略，因为没有常数相加。第二条只保留最高项，所以n/2这项去掉。第三条，去除与最高项相乘的常数，最终得O(n^2)。</p>
+</blockquote>
+<h5 id="对数阶"><a href="#对数阶" class="headerlink" title="对数阶"></a>对数阶</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int i = 1, n = 100;</span><br><span class="line">while (i &lt; n)</span><br><span class="line">&#123;</span><br><span class="line">    i = i * 2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>由于每次i+2之后，就距离n更近一步，假设有x个2相乘后大于或等于n，则会退出循环。<br>由于2^x = n得到x = log(2)n，所以这个循环的时间复杂度为O(logn)。</p>
+</blockquote>
+<h4 id="函数调用的时间复杂度分析"><a href="#函数调用的时间复杂度分析" class="headerlink" title="函数调用的时间复杂度分析"></a>函数调用的时间复杂度分析</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int i, j;</span><br><span class="line">for(i=0; i&lt;n; i++) &#123;</span><br><span class="line">    function(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void function(int count)&#123;</span><br><span class="line">    System.out.println(count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>funciton函数的时间复杂度是O(1)，所以整体的时间复杂度就是循环的次数O(n)。<br>假如fuction是下面这样</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void function(int count)&#123;</span><br><span class="line">    int j;</span><br><span class="line">    for(j=count; j&lt;n; j++) &#123;</span><br><span class="line">        System.out.println(j);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>事实上，这和之前平方阶的时候举得第二个例子是一样的：funciton内部的循环次数随count的增长（接近n）而减少，所以根据策略，算法的时间复杂度为O(n^2)。</p>
+</blockquote>
+<h4 id="常见的时间复杂度"><a href="#常见的时间复杂度" class="headerlink" title="常见的时间复杂度"></a>常见的时间复杂度</h4><table>
+<thead>
+<tr>
+<th>例子</th>
+<th>时间复杂度</th>
+<th>术语</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5201314</td>
+<td>O(1)</td>
+<td>常数阶</td>
+</tr>
+<tr>
+<td>3n+4</td>
+<td>O(n)</td>
+<td>线性阶</td>
+</tr>
+<tr>
+<td>3n^2+4n+5</td>
+<td>O(n^2)</td>
+<td>平方阶</td>
+</tr>
+<tr>
+<td>3log(2)n+4</td>
+<td>O(logn)</td>
+<td>对数阶</td>
+</tr>
+<tr>
+<td>2n+3nlog(2)n+14</td>
+<td>O(nlogn)</td>
+<td>nlogn阶</td>
+</tr>
+<tr>
+<td>n^3+2n^2+4n+6</td>
+<td>O(n^3)</td>
+<td>立方阶</td>
+</tr>
+<tr>
+<td>2^n</td>
+<td>O(2^n)</td>
+<td>指数阶</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>常用的时间复杂度所耗费的时间从小到大依次是：<br>O(1)&lt;O(logn)&lt;O(n)&lt;O(nlogn)&lt;O(n^ 2)&lt;O(n^ 3)&lt;O(2^n)&lt;O(n !)&lt;O(n^n)</p>
+</blockquote>
+<h4 id="最坏情况和平均情况"><a href="#最坏情况和平均情况" class="headerlink" title="最坏情况和平均情况"></a>最坏情况和平均情况</h4><blockquote>
+<p>一般人常出于一种对未来失败的担忧，而在预期的时候趋向做最坏的打算。这样，即使最糟糕的结果出现，当事人也有了心理准备，比较容易接受结果，假如结局并未出现最坏的状况，这也会使人更加快乐，瞧，事情发展的还不错嘛！<br>算法的分析也是类似，我们查找一个有n个随机数字数组中的某个数字，最好的情况是第一个数字就是，那么算法的时间复杂度为O(1)，但也有可能这个数字就在最后一个位置，那么时间复杂度为O(n)。<br>平均运行时间是期望的运行时间。<br>最坏运行时间是一种保证。在应用中，这是一种最重要的需求，通常除非特别指定，我们提到的运行时间都是最坏情况的运行时间。</p>
+</blockquote>
+<h4 id="算法的空间复杂度"><a href="#算法的空间复杂度" class="headerlink" title="算法的空间复杂度"></a>算法的空间复杂度</h4><blockquote>
+<p>我们在写代码时，完全可以用空间来换取时间<br>举个例子，要判断某年是不是闰年，可能会写一个算法，每给一个年份，就可以通过这个算法计算得到是否闰年的结果。<br>另一种方法是，事先建立一个有2050个元素的数组，然后把所有的年份按下标的数字对应，如果是闰年，则此数组元素的值是1，如果不是元素的值则为0，这样，所谓的判断某一年是否为闰年就变成了查找这个数组某一个元素的值的问题。<br>第一种方法相比起第二种来说很明显非常节省空间，但每一次查询都需要经过一系列的计算才能值的是否为闰年。第二种方法虽然需要在内存里存储2050个元素的数组，但是每次查询只需要一次索引判断即可。  </p>
+</blockquote>
+<blockquote>
+<p>算法的空间复杂度通过计算算法所需的存储空间实现，算法的空间复杂度的计算公式记作：S(n)=O(f(n))，其中，n为问题的规模，f(n)为语句关于n所占存储空间的函数。<br>通常，我们都是用“时间复杂度”来指运行时间的需求，“空间复杂度”指空间需求。<br>当直接要让我们求“复杂度”时，通常指的是时间复杂度。<br>显然对时间复杂度的追求更是属于算法的潮流！</p>
+</blockquote>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://yoursite.com">John Doe</a>
+            </p><p>原文链接：<a href="http://yoursite.com/2018/12/28/数据结构和算法-绪论/">http://yoursite.com/2018/12/28/数据结构和算法-绪论/</a>
+            </p><p>发表日期：<a href="http://yoursite.com/2018/12/28/数据结构和算法-绪论/">December 28th 2018, 1:37:52 pm</a>
+            </p><p>更新日期：<a href="http://yoursite.com/2018/12/28/数据结构和算法-绪论/">December 28th 2018, 1:43:45 pm</a>
+            </p><p>版权声明：</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2018/12/17/hello-world/" title="Hello World">
+                    <div class="prevTitle">Hello World</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:976147727@qq.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/QinhaoLin" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title="wechat">
+                  
+                  <img class="profile-qr" src="/assets/Wechat-code.jpg">
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title="qq">
+                  
+                  <img class="profile-qr" src="/assets/QQ-code.jpg">
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title="rss"></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#绪论"><span class="toc-number">1.</span> <span class="toc-text">绪论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据结构和算法绪论"><span class="toc-number">1.1.</span> <span class="toc-text">数据结构和算法绪论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是数据结构"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">什么是数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#逻辑结构和物理结构"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">逻辑结构和物理结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四大逻辑结构"><span class="toc-number">1.1.0.3.</span> <span class="toc-text">四大逻辑结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#物理结构"><span class="toc-number">1.1.0.4.</span> <span class="toc-text">物理结构</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法"><span class="toc-number">1.2.</span> <span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是算法"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">什么是算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法的特征"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">算法的特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法设计的要求"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">算法设计的要求</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间复杂度和空间复杂度"><span class="toc-number">1.3.</span> <span class="toc-text">时间复杂度和空间复杂度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#算法效率的度量方法"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">算法效率的度量方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数渐进增长"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">函数渐进增长</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法时间复杂度的定义"><span class="toc-number">1.3.0.3.</span> <span class="toc-text">算法时间复杂度的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#推到大O阶方法"><span class="toc-number">1.3.0.4.</span> <span class="toc-text">推到大O阶方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#常数阶"><span class="toc-number">1.3.0.4.1.</span> <span class="toc-text">常数阶</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#线性阶"><span class="toc-number">1.3.0.4.2.</span> <span class="toc-text">线性阶</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#平方阶"><span class="toc-number">1.3.0.4.3.</span> <span class="toc-text">平方阶</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#对数阶"><span class="toc-number">1.3.0.4.4.</span> <span class="toc-text">对数阶</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数调用的时间复杂度分析"><span class="toc-number">1.3.0.5.</span> <span class="toc-text">函数调用的时间复杂度分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#常见的时间复杂度"><span class="toc-number">1.3.0.6.</span> <span class="toc-text">常见的时间复杂度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最坏情况和平均情况"><span class="toc-number">1.3.0.7.</span> <span class="toc-text">最坏情况和平均情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法的空间复杂度"><span class="toc-number">1.3.0.8.</span> <span class="toc-text">算法的空间复杂度</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 2
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2018/12/17/hello-world/">Hello World</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/28</span><a class="archive-post-title" href="/2018/12/28/数据结构和算法-绪论/">数据结构和算法-绪论</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "John Doe"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
